@@ -10,7 +10,7 @@ class Forest extends Model
     use HasFactory;
     
     // usersテーブルとのリレーション （従テーブル側）
-    public function user() {
-        return $this->belongsTo('App\Models\User');
+    public function owner() {
+        return $this->belongsTo(User::class, 'id');
     }
 }
