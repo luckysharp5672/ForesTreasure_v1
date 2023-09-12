@@ -28,8 +28,8 @@
             </div>
 
 
-            <!-- 本のタイトル -->
-            <form action="{{ url('teams') }}" method="POST" class="w-full max-w-lg">
+            <!-- 森林のタイトル -->
+            <form action="{{ url('forests') }}" method="POST" class="w-full max-w-lg">
                 @csrf
                   <div class="flex flex-col px-2 py-2">
                    <!-- カラム１ -->
@@ -37,15 +37,44 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林名
                       </label>
-                      <input name="team_name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                      <input name="forest_name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                    </div>
+                    <!-- カラム２ -->
+                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                       森林CSVファイルアップロード
+                      </label>
+                      <input name="csv_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                    </div>
+                    <!-- カラム３ -->
+                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                       森林3Dディスプレイアップロード
+                      </label>
+                      <input name="digital_3d_display_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                    </div>
+                    <!-- カラム４ -->
+                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                       緯度
+                      </label>
+                      <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                    </div>
+                    <!-- カラム５ -->
+                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                       経度
+                      </label>
+                      <input name="longitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
                   </div>
-                  <!-- カラム５ -->
-                  <div class="flex flex-col">
+                  
+                  <!-- カラム６ -->
+                    <div class="flex flex-col">
                       <div class="text-gray-700 text-center px-4 py-2 m-2">
                              <x-button class="bg-blue-500 rounded-lg">送信</x-button>
                       </div>
-                   </div>
+                    </div>
             </form>
         </div>
         <!--左エリア[END]--> 
@@ -69,7 +98,11 @@
                         </tr>
                       </thead>
                       <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                          <x-collection></x-collection>
+                        @if (count($forests) > 0)
+                            @foreach ($forests as $forest)
+                          <x-collection :forest="$forest"></x-collection>
+                          @endforeach
+                        @endif
                       </tbody>
                     </table>
                   </div>
@@ -78,7 +111,6 @@
             </div>
         </div>
         <!--右側エリア[[END]-->  
-      
 
 </div>
  <!--全エリア[END]-->

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ForestController;//追記
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/', [ForestController::class, 'index'])->middleware(['auth']);
+
+Route::post('forests', [ForestController::class, 'store']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

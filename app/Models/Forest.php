@@ -11,6 +11,6 @@ class Forest extends Model
     
     // usersテーブルとのリレーション （従テーブル側）
     public function owner() {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo('App\Models\User');
     }
 }

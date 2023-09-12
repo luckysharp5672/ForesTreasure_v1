@@ -51,8 +51,8 @@ class User extends Authenticatable
 
     
     // forestsテーブルとのリレーション （主テーブル側）
-    public function forests() {
-       return $this->hasMany(Forest::class, 'owner_id');
+    public function o_forests() {
+       return $this->hasMany('App\Models\Forest');
     }
     
     
