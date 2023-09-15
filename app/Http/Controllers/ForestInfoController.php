@@ -27,7 +27,7 @@ class ForestInfoController extends Controller
         $forestID = forests()->id();
     
         foreach ($data as $row) {
-            Forest::create([
+            ForestInformation::create([
                 'forest_id' => $forestID,
                 'tree_number' => $row[22],
                 'diameter' => $row[3],

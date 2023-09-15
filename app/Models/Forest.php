@@ -13,4 +13,9 @@ class Forest extends Model
     public function owner() {
         return $this->belongsTo('App\Models\User');
     }
+    
+    // forest_infomationテーブルとのリレーション （主テーブル側）
+    public function forestinfo() {
+       return $this->hasMany('App\Models\ForestInformation');
+    }
 }
