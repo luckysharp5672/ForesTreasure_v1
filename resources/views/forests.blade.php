@@ -32,40 +32,40 @@
             <form action="{{ url('forests') }}" method="POST" class="w-full max-w-lg">
                 @csrf
                   <div class="flex flex-col px-2 py-2">
-                   <!-- カラム１ -->
+                   <!-- 森林名 -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林名
                       </label>
                       <input name="forest_name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
-                    <!-- カラム２ -->
+                    <!-- 森林CSVファイルアップロード -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林CSVファイルアップロード
                       </label>
-                    <div action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <input type="file" name="csv_file" required>
                         <button type="submit">インポート</button>
-                    </div>
+                    </form>
                       <!--<input name="csv_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">-->
                     </div>
-                    <!-- カラム３ -->
+                    <!-- 森林3Dディスプレイアップロード -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林3Dディスプレイアップロード
                       </label>
                       <input name="digital_3d_display_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
-                    <!-- カラム４ -->
+                    <!-- 緯度 -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        緯度
                       </label>
                       <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
-                    <!-- カラム５ -->
+                    <!-- 経度 -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        経度

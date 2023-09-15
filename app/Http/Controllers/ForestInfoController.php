@@ -4,10 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ForestInformation;
+use App\Models\Forest;
 
 class ForestInfoController extends Controller
 {
-    public function import(Request $request){
+    public function detail($id)
+    {
+        $forest = Forest::find($id);
+        return view('forest-detail', ['forest' => $forest]);
+    }
+
+    public function import(Request $request)
+    {
         // ファイルのバリデーション
         $request->validate([
             'csv_file' => 'required|mimes:csv,txt|max:2048',

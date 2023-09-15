@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ForestController;//追記
+use App\Http\Controllers\ForestController;
+use App\Http\Controllers\ForestInfoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +34,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/forest/detail/{id}', [ForestInfoController::class, 'detail'])->name('forest.detail');
 
 Route::post('/forestinformation/import', [ForestInfoController::class, 'import'])->name('forestinformation.import');
 
