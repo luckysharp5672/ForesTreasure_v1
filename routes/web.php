@@ -33,4 +33,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/forestinformation/import', [ForestInfoController::class, 'import'])->name('forestinformation.import');
+
 require __DIR__.'/auth.php';

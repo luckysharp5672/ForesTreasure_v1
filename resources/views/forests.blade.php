@@ -44,7 +44,12 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林CSVファイルアップロード
                       </label>
-                      <input name="csv_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                    <form action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <input type="file" name="csv_file" required>
+                        <button type="submit">インポート</button>
+                    </form>
+                      <!--<input name="csv_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">-->
                     </div>
                     <!-- カラム３ -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">

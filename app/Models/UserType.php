@@ -12,7 +12,7 @@ class UserType extends Model
     
     // usersテーブルとのリレーション （主テーブル側）
     public function user() {
-       return $this->hasMany('App\Models\Forest');
+       return $this->hasMany('App\Models\User');
     }
     
 }
