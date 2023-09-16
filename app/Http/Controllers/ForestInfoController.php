@@ -30,32 +30,37 @@ class ForestInfoController extends Controller
         $filepath = public_path($location . "/" . $filename);
         
         // CSVファイルを開く
-        $csv = Reader::createFromPath($filepath, 'r');
+        $csvContent = file_get_contents($filepath);
+        $csvContentUTF8 = iconv('Shift_JIS', 'UTF-8', $csvContent);
+        $csv = Reader::createFromString($csvContentUTF8);
+
         
-        // ヘッダー行を削除
-        // array_shift($data);
+        
+        // ヘッダー行をスキップ
+        $csv->setHeaderOffset(0);
         
         // 森林ID変数の設定
-        $forestID = forests()->id();
+        $forestID = $request->input('forest_id');
         
         // 各行をループしてデータをインポート
-        foreach ($csv as $record) {
+        foreach ($csv->getRecords() as $record) {
             ForestInformation::create([
                 'forest_id' => $forestID,
-                'tree_number' => $record[22],
-                'diameter' => $record[3],
-                'height' => $record[4],
-                'arrow_height' => $record[5],
-                'volume' => $record[7],
-                'biomass' => $record[9],
-                'species' => $record[10],
-                'longitude' => $record[27],
-                'latitude' => $record[28],
+                'tree_number' => $record['ID'],
+                'diameter' => $record['胸高直径[cm]'],
+                'height' => $record['樹高[m]'],
+                'arrow_height' => $record['矢高[cm]'],
+                'volume' => $record['材積[m3]'],
+                'biomass' => $record['バイオマス[kg]'],
+                'species' => $record['樹種'],
+                'longitude' => $record['経度（日本測地系）'],
+                'latitude' => $record['緯度（日本測地系）'],
             ]);
         }
 
         // 成功メッセージを表示（オプション）
-        return redirect()->back()->with('success', 'データが正常にインポートされました');
+        // return redirect()->back()->with('success', 'データが正常にインポートされました');
+        return redirect('/')->with('success', 'データが正常にインポートされました');
     }
       
      /**

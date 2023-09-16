@@ -29,8 +29,8 @@
 
 
             <!-- 森林のタイトル -->
-            <form action="{{ url('forests') }}" method="POST" class="w-full max-w-lg">
-                @csrf
+            <!--<form action="{{ url('forests') }}" method="POST" class="w-full max-w-lg">-->
+                <!--@csrf-->
                   <div class="flex flex-col px-2 py-2">
                     <!-- 森林CSVファイルアップロード -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
@@ -39,6 +39,7 @@
                       </label>
                     <form action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="forest_id" value="{{ $forest->id }}">
                         <input type="file" name="csv_file" required>
                         <button type="submit">インポート</button>
                     </form>
@@ -52,7 +53,7 @@
                       <input name="digital_3d_display_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
                   </div>
-            </form>
+            <!--</form>-->
         </div>
         <!--左エリア[END]--> 
     

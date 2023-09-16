@@ -17,9 +17,9 @@ use App\Http\Controllers\ForestInfoController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/', [ForestController::class, 'index'])->middleware(['auth']);
 
