@@ -37,7 +37,7 @@ class ForestController extends Controller
         $forests->owner_id = Auth::id();//ここでログインしているユーザidを登録しています
         $forests->forest_name = $request->forest_name;
         // $forests->csv_file_path = $request->csv_file_path;
-        $forests->digital_3d_display_file_path = $request->digital_3d_display_file_path;
+        // $forests->digital_3d_display_file_path = $request->digital_3d_display_file_path;
         $forests->latitude = $request->latitude;
         $forests->longitude = $request->longitude;
         $forests->save();

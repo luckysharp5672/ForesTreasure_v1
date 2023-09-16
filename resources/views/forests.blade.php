@@ -39,25 +39,6 @@
                       </label>
                       <input name="forest_name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
-                    <!-- 森林CSVファイルアップロード -->
-                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                       森林CSVファイルアップロード
-                      </label>
-                    <form action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="file" name="csv_file" required>
-                        <button type="submit">インポート</button>
-                    </form>
-                      <!--<input name="csv_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">-->
-                    </div>
-                    <!-- 森林3Dディスプレイアップロード -->
-                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
-                      <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                       森林3Dディスプレイアップロード
-                      </label>
-                      <input name="digital_3d_display_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
-                    </div>
                     <!-- 緯度 -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -74,10 +55,10 @@
                     </div>
                   </div>
                   
-                  <!-- カラム６ -->
+                  <!-- 森林登録 -->
                     <div class="flex flex-col">
                       <div class="text-gray-700 text-center px-4 py-2 m-2">
-                             <x-button class="bg-blue-500 rounded-lg">送信</x-button>
+                             <x-button class="bg-blue-500 rounded-lg">森林登録</x-button>
                       </div>
                     </div>
             </form>
@@ -94,7 +75,7 @@
                     <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                       <thead class="bg-gray-50 dark:bg-gray-700">
                         <tr>
-                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">チーム名</th>
+                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">森林名</th>
                           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">オーナー</th>
                           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">参加人数</th>
                           <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">詳細</th>

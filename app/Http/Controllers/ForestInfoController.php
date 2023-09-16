@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use League\Csv\Reader;
 use App\Models\ForestInformation;
 use App\Models\Forest;
 
@@ -27,29 +28,34 @@ class ForestInfoController extends Controller
         $file->move($location, $filename);
     
         $filepath = public_path($location . "/" . $filename);
-        $data = array_map('str_getcsv', file($filepath));
-    
-        // ヘッダー行を削除
-        array_shift($data);
         
+        // CSVファイルを開く
+        $csv = Reader::createFromPath($filepath, 'r');
+        
+        // ヘッダー行を削除
+        // array_shift($data);
+        
+        // 森林ID変数の設定
         $forestID = forests()->id();
-    
-        foreach ($data as $row) {
+        
+        // 各行をループしてデータをインポート
+        foreach ($csv as $record) {
             ForestInformation::create([
                 'forest_id' => $forestID,
-                'tree_number' => $row[22],
-                'diameter' => $row[3],
-                'height' => $row[4],
-                'arrow_height' => $row[5],
-                'volume' => $row[7],
-                'biomass' => $row[9],
-                'species' => $row[10],
-                'longitude' => $row[27],
-                'latitude' => $row[28],
+                'tree_number' => $record[22],
+                'diameter' => $record[3],
+                'height' => $record[4],
+                'arrow_height' => $record[5],
+                'volume' => $record[7],
+                'biomass' => $record[9],
+                'species' => $record[10],
+                'longitude' => $record[27],
+                'latitude' => $record[28],
             ]);
         }
-    
-        return redirect()->back()->with('success', 'CSVデータをインポートしました！');
+
+        // 成功メッセージを表示（オプション）
+        return redirect()->back()->with('success', 'データが正常にインポートされました');
     }
       
      /**
