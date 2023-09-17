@@ -39,4 +39,6 @@ Route::get('/forest/detail/{id}', [ForestInfoController::class, 'detail'])->name
 
 Route::post('/forestinformation/import', [ForestInfoController::class, 'import'])->name('forestinformation.import');
 
+Route::post('/upload', 'VideoController@upload');
+
 require __DIR__.'/auth.php';

@@ -37,21 +37,28 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林CSVファイルアップロード
                       </label>
-                    <form action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <input type="hidden" name="forest_id" value="{{ $forest->id }}">
-                        <input type="file" name="csv_file" required>
-                        <button type="submit">インポート</button>
-                    </form>
-                      <!--<input name="csv_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">-->
+                        <form action="{{ route('forestinformation.import') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="hidden" name="forest_id" value="{{ $forest->id }}">
+                            <input type="file" name="csv_file" required>
+                            <button type="submit">アップロード</button>
+                        </form>
                     </div>
-                    <!-- 森林3Dディスプレイアップロード -->
+                    <!-- 森林3Dアップロード -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                       森林3Dディスプレイアップロード
+                       森林3Dアップロード
                       </label>
-                      <input name="digital_3d_display_file_path" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                        <form action="/upload" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <input type="file" name="video">
+                            <button type="submit">アップロード</button>
+                        </form>
                     </div>
+                    <video width="320" height="240" controls>
+                        <source src="{{ asset('storage/videos/ファイル名') }}" type="video/mp4">
+                        ご使用のブラウザは動画の再生に対応していません。
+                    </video>
                   </div>
             <!--</form>-->
         </div>
