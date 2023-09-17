@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForestController;
 use App\Http\Controllers\ForestInfoController;
-
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +39,6 @@ Route::get('/forest/detail/{id}', [ForestInfoController::class, 'detail'])->name
 
 Route::post('/forestinformation/import', [ForestInfoController::class, 'import'])->name('forestinformation.import');
 
-Route::post('/upload', 'VideoController@upload');
+Route::post('/upload', [VideoController::class, 'upload'])->name('video.upload');
 
 require __DIR__.'/auth.php';

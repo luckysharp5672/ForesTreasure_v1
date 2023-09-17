@@ -18,4 +18,10 @@ class Forest extends Model
     public function forestinfo() {
        return $this->hasMany('App\Models\ForestInformation');
     }
+    
+    // Videosテーブルとのリレーション　（主テーブル側）
+    public function videos()
+    {
+        return $this->hasMany('App\Models\Video');
+    }
 }

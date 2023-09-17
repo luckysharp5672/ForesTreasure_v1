@@ -49,16 +49,23 @@
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                        森林3Dアップロード
                       </label>
-                        <form action="/upload" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('video.upload') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <input type="file" name="video">
+                            <input type="hidden" name="forest_id" value="{{ $forest->id }}">
+                            <input type="file" name="video" required>
                             <button type="submit">アップロード</button>
                         </form>
                     </div>
-                    <video width="320" height="240" controls>
-                        <source src="{{ asset('storage/videos/ファイル名') }}" type="video/mp4">
+                    @php
+                    $video = $forest->videos->first();
+                    @endphp
+                    
+                    @if($video)
+                    <video width="448" height="336" controls>
+                        <source src="{{ asset('storage/videos/' . $video->filename) }}" type="video/mp4">
                         ご使用のブラウザは動画の再生に対応していません。
                     </video>
+                    @endif
                   </div>
             <!--</form>-->
         </div>
