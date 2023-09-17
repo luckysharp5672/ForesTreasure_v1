@@ -12,7 +12,8 @@ class ForestInfoController extends Controller
     public function detail($id)
     {
         $forest = Forest::find($id);
-        return view('forest-detail', ['forest' => $forest]);
+        $forestInformation = ForestInformation::where('forest_id', $id)->get();
+        return view('forest-detail', ['forest' => $forest, 'forestInformation' => $forestInformation]);
     }
 
     public function import(Request $request)

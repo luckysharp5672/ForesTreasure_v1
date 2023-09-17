@@ -58,7 +58,49 @@
         <!--左エリア[END]--> 
     
         <!--右側エリア[START]-->
-
+        <div class="flex-1 text-gray-700 text-left px-4 py-2 m-2">
+             <!-- 立木の一覧 -->
+            <div class="flex flex-col">
+              <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                  <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                      <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">森林ID</th>
+                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">立木ID</th>
+                          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">胸高直径[cm]</th>
+                          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">樹高[m]</th>
+                          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">矢高[cm]</th>
+                        　<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">材積[m3]</th>
+                        　<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">バイオマス[kg]</th>
+                        　<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">樹種</th>
+                        　<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">緯度</th>
+                        　<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">経度</th>
+                        </tr>
+                      </thead>
+                      <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        @foreach($forestInformation as $info)
+                            <tr>
+                                <td>{{ $info->forest_id }}</td>
+                                <td>{{ $info->tree_number }}</td>
+                                <td>{{ $info->diameter }}</td>
+                                <td>{{ $info->height }}</td>
+                                <td>{{ $info->arrow_height }}</td>
+                                <td>{{ $info->volume }}</td>
+                                <td>{{ $info->biomass }}</td>
+                                <td>{{ $info->species }}</td>
+                                <td>{{ $info->longitude }}</td>
+                                <td>{{ $info->latitude }}</td>
+                            </tr>
+                        @endforeach
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
         <!--右側エリア[[END]-->  
 
 </div>
