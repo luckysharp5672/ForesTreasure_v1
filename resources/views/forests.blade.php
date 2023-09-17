@@ -23,7 +23,7 @@
             
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-500 font-bold">
-                    森林を管理する
+                    森林を登録する
                 </div>
             </div>
 
@@ -39,6 +39,15 @@
                       </label>
                       <input name="forest_name" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
                     </div>
+                    
+                    <!-- BingMapを表示するためのdiv -->
+                    <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                        <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                           マップ上に森林の場所を示してください（マップ上でダブルクリック）
+                        </label>
+                        <div id="myMap" style="width: 448px; height: 336px;"></div>
+                    </div>
+                    
                     <!-- 緯度 -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -62,6 +71,9 @@
                       </div>
                     </div>
             </form>
+            
+    <!-- ... その他のコード ... -->
+            
         </div>
         <!--左エリア[END]--> 
     
@@ -100,5 +112,29 @@
 
 </div>
  <!--全エリア[END]-->
+
+<!-- Bing Maps APIのスクリプト -->
+<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=ApUslpO8ghJ6mpe35ApW427eo72OmGGHg9ETniAK37AnLv7g6GzjaiEkrMB1cowL' async defer></script>
+
+<script type="text/javascript">
+    function loadMapScenario() {
+        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+            /* ここでマップの初期設定を行うことができます */
+        });
+
+        // ダブルクリックイベントを追加
+        Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
+            // ピンを立てる
+            var pin = new Microsoft.Maps.Pushpin(e.location);
+            map.entities.push(pin);
+
+            // 緯度と経度を取得して入力フィールドにセット
+            document.querySelector('input[name="latitude"]').value = e.location.latitude;
+            document.querySelector('input[name="longitude"]').value = e.location.longitude;
+        });
+    }
+</script>
+
+
 
 </x-app-layout>

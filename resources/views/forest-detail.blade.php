@@ -57,7 +57,7 @@
                         </form>
                     </div>
                     @php
-                    $video = $forest->videos->first();
+                    $video = $forest->videos()->latest()->first();
                     @endphp
                     
                     @if($video)
@@ -96,16 +96,16 @@
                       <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
                         @foreach($forestInformation as $info)
                             <tr>
-                                <td>{{ $info->forest_id }}</td>
-                                <td>{{ $info->tree_number }}</td>
-                                <td>{{ $info->diameter }}</td>
-                                <td>{{ $info->height }}</td>
-                                <td>{{ $info->arrow_height }}</td>
-                                <td>{{ $info->volume }}</td>
-                                <td>{{ $info->biomass }}</td>
-                                <td>{{ $info->species }}</td>
-                                <td>{{ $info->longitude }}</td>
-                                <td>{{ $info->latitude }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->forest_id }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->tree_number }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->diameter }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->height }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->arrow_height }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->volume }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->biomass }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->species }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->longitude }}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">{{ $info->latitude }}</td>
                             </tr>
                         @endforeach
                       </tbody>
