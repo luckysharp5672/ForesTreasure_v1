@@ -1,4 +1,4 @@
-<!-- resources/views/books.blade.php -->
+<!-- resources/views/forests.blade.php -->
 <x-app-layout>
 
     <!--ヘッダー[START]-->
@@ -91,7 +91,7 @@
                           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">オーナー</th>
                           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase dark:text-gray-400">参加人数</th>
                           <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">詳細</th>
-                          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">参加</th>
+                          <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">作業依頼</th>
                         　<th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase dark:text-gray-400">編集</th>
                         </tr>
                       </thead>
@@ -109,32 +109,29 @@
             </div>
         </div>
         <!--右側エリア[[END]-->  
+    </div>
+     <!--全エリア[END]-->
 
-</div>
- <!--全エリア[END]-->
-
-<!-- Bing Maps APIのスクリプト -->
-<script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=ApUslpO8ghJ6mpe35ApW427eo72OmGGHg9ETniAK37AnLv7g6GzjaiEkrMB1cowL' async defer></script>
-
-<script type="text/javascript">
-    function loadMapScenario() {
-        var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
-            /* ここでマップの初期設定を行うことができます */
-        });
-
-        // ダブルクリックイベントを追加
-        Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
-            // ピンを立てる
-            var pin = new Microsoft.Maps.Pushpin(e.location);
-            map.entities.push(pin);
-
-            // 緯度と経度を取得して入力フィールドにセット
-            document.querySelector('input[name="latitude"]').value = e.location.latitude;
-            document.querySelector('input[name="longitude"]').value = e.location.longitude;
-        });
-    }
-</script>
-
-
+    <!-- Bing Maps APIのスクリプト -->
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=ApUslpO8ghJ6mpe35ApW427eo72OmGGHg9ETniAK37AnLv7g6GzjaiEkrMB1cowL' async defer></script>
+    
+    <script type="text/javascript">
+        function loadMapScenario() {
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                /* ここでマップの初期設定を行うことができます */
+            });
+    
+            // ダブルクリックイベントを追加
+            Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
+                // ピンを立てる
+                var pin = new Microsoft.Maps.Pushpin(e.location);
+                map.entities.push(pin);
+    
+                // 緯度と経度を取得して入力フィールドにセット
+                document.querySelector('input[name="latitude"]').value = e.location.latitude;
+                document.querySelector('input[name="longitude"]').value = e.location.longitude;
+            });
+        }
+    </script>
 
 </x-app-layout>
