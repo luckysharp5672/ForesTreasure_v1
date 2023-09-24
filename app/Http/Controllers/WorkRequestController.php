@@ -20,7 +20,9 @@ class WorkRequestController extends Controller
         ]);
     
         $data['request_date'] = now();
-    
+        
+        $data['requester_id'] = auth()->id();
+        
         WorkRequest::create($data);
         
         // 通知を送信
@@ -36,6 +38,12 @@ class WorkRequestController extends Controller
         $foresters = User::getForestersNearby($forest->latitude, $forest->longitude);
     
         return view('request_form', ['foresters' => $foresters, 'forest' => $forest]);
+    }
+    
+    public function index()
+    {
+        $workRequests = WorkRequest::all(); // すべてのwork_requestsを取得
+        return view('work_requests', ['workRequests' => $workRequests]); // work_requestsのビューにデータを渡して表示
     }
 
 }

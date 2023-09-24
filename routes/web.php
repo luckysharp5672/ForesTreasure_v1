@@ -51,4 +51,6 @@ Route::get('/work_requests/create/{forestId}', [WorkRequestController::class, 'c
 
 Route::resource('work_requests', WorkRequestController::class)->except(['create']);
 
+Route::get('/work_requests', [WorkRequestController::class, 'index'])->name('work_requests');
+
 require __DIR__.'/auth.php';

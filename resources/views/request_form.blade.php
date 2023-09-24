@@ -11,7 +11,7 @@
     <!--ヘッダー[END]-->
 
     <div class="container">
-        <h1>Request Form</h1>
+        <h1>作業依頼フォーム</h1>
     
         <form action="{{ route('work_requests.store') }}" method="post">
             @csrf
