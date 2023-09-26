@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ForestInformation;
 use App\Models\SearchCondition;
+use App\Models\Forest;
 
 
 class TimberSearchController extends Controller
@@ -13,7 +15,9 @@ class TimberSearchController extends Controller
     public function index()
     {
         $speciesList = ForestInformation::distinct()->pluck('species');
-        return view('timber_search', ['speciesList' => $speciesList]);
+        $ownedForests = Forest::where('owner_id', Auth::id())->get();
+        return view('timber_search', ['speciesList' => $speciesList, 'ownedForests' => $ownedForests]);
+    
     }
     
     public function searchResults(Request $request)

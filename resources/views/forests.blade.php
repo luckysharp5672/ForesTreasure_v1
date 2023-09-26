@@ -2,14 +2,6 @@
 <x-app-layout>
 
     <!--ヘッダー[START]-->
-    <!--<x-slot name="header">-->
-    <!--    <h2 class="font-semibold text-xl text-gray-800 leading-tight">-->
-    <!--        <form action="" method="GET" class="w-full max-w-lg">-->
-    <!--            <x-button class="bg-gray-100 text-gray-900">{{ __('戻る') }}</x-button>-->
-    <!--        </form>-->
-    <!--    </h2>-->
-    <!--</x-slot>-->
-    
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             <x-button onclick="goBack()" class="bg-gray-100 text-gray-900">{{ __('戻る') }}</x-button>
