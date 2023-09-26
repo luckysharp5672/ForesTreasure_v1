@@ -16,7 +16,14 @@
         <!-- 検索フォームの開始 -->
         <form action="{{ route('timber.search.results') }}" method="post">
             @csrf
-
+            
+            <label for="forests">所有している森林:</label>
+            <select name="forests[]" multiple>
+                @foreach($forests as $forest)
+                    <option value="{{ $forest->id }}">{{ $forest->forest_name }}</option>
+                @endforeach
+            </select>
+            
             @foreach(['diameter', 'height', 'arrow_height', 'volume', 'biomass'] as $field)
             <div class="filter-section">
                 <label for="{{ $field }}">{{ ucfirst($field) }}</label>
@@ -85,8 +92,13 @@
                 document.getElementById('longitude').value = longitude;
         
                 // ピンを追加
-                var pin = new Microsoft.Maps.Pushpin(loc, null);
-                map.entities.push(pin);
+                <!--var pin = new Microsoft.Maps.Pushpin(loc, null);-->
+                <!--map.entities.push(pin);-->
+                @foreach($ownedForests as $forest)
+                    var loc = new Microsoft.Maps.Location({{ $forest->latitude }}, {{ $forest->longitude }});
+                    var pin = new Microsoft.Maps.Pushpin(loc, {color: 'red'});
+                    map.entities.push(pin);
+                @endforeach
             });
         }
     </script>

@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 class ForestController extends Controller
 {
     public function index(){
-        //チーム全件取得
-        $forests = Forest::get();
+        // ログインしているユーザーがオーナーの森林のみを取得
+        $forests = Forest::where('owner_id', Auth::id())->get();
     
         return view('forests',[
             'forests'=> $forests

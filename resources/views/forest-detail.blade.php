@@ -4,9 +4,12 @@
     <!--ヘッダー[START]-->
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <form action="" method="GET" class="w-full max-w-lg">
-                <x-button class="bg-gray-100 text-gray-900">{{ __('Dashboard') }}</x-button>
-            </form>
+            <x-button onclick="goBack()" class="bg-gray-100 text-gray-900">{{ __('戻る') }}</x-button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
         </h2>
     </x-slot>
     <!--ヘッダー[END]-->
@@ -114,6 +117,7 @@
                 </div>
               </div>
             </div>
+            <a class="text-blue-500 hover:text-blue-700" href="{{ route('work_requests.create', ['forestId' => $forest->id]) }}">作業依頼</a>
         </div>
         <!--右側エリア[[END]-->  
 

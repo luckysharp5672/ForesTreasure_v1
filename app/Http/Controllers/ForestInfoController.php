@@ -60,8 +60,8 @@ class ForestInfoController extends Controller
         }
 
         // 成功メッセージを表示（オプション）
-        // return redirect()->back()->with('success', 'データが正常にインポートされました');
-        return redirect('/')->with('success', 'データが正常にインポートされました');
+        return redirect()->back()->with('success', 'データが正常にインポートされました');
+
     }
       
      /**

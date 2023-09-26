@@ -23,13 +23,17 @@ class WorkRequestController extends Controller
         
         $data['requester_id'] = auth()->id();
         
-        WorkRequest::create($data);
+        $result = WorkRequest::create($data);
         
-        // 通知を送信
-        $forester = User::find($data['forester_id']);
-        // $forester->notify(new WorkRequested());
-    
-        return redirect()->back()->with('success', '依頼が送信されました。');
+        if ($result) {
+            // 通知を送信
+            $forester = User::find($data['forester_id']);
+            // $forester->notify(new WorkRequested());
+        
+            return redirect()->back()->with('success', '依頼が送信されました。');
+        } else {
+            return redirect()->back()->with('error', '依頼できませんでした。入力データを確認ください。');
+        }
     }
     
     public function create(Request $request, $forestId)

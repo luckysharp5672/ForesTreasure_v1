@@ -3,9 +3,12 @@
     <!--ヘッダー[START]-->
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            <form action="" method="GET" class="w-full max-w-lg">
-                <x-button class="bg-gray-100 text-gray-900">{{ __('Dashboard') }}</x-button>
-            </form>
+            <x-button onclick="goBack()" class="bg-gray-100 text-gray-900">{{ __('戻る') }}</x-button>
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script>
         </h2>
     </x-slot>
     <!--ヘッダー[END]-->
@@ -20,7 +23,7 @@
                     <th>森林名</th>
                     <th>作業種別</th>
                     <th>依頼元</th>
-                    <th>依頼受</th>
+                    <th>依頼先</th>
                     <th>作業完了希望日</th>
                     <th>作業依頼日</th>
                     <th>作業承認日</th>
