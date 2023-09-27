@@ -28,7 +28,23 @@
             </select>
             
             <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
-            <label for="radius">検索範囲の半径 (m)</label>
+            
+            <!-- 緯度 -->
+            <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+               緯度
+              </label>
+              <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+            </div>
+            <!-- 経度 -->
+            <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+               経度
+              </label>
+              <input name="longitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+            </div>
+            
+            <label for="radius">検索範囲の半径 (km)</label>
             <input type="number" name="radius" id="radius">
 
             
@@ -84,26 +100,26 @@
     
     <script type="text/javascript">
         function loadMapScenario() {
-            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {});
-            Microsoft.Maps.Events.addHandler(map, 'click', function (e) {
-                var point = new Microsoft.Maps.Point(e.getX(), e.getY());
-                var loc = e.target.tryPixelToLocation(point);
-                var latitude = loc.latitude;
-                var longitude = loc.longitude;
-        
-                // 座標を入力フィールドに反映
-                document.getElementById('latitude').value = latitude;
-                document.getElementById('longitude').value = longitude;
-        
-                // ピンを追加
-                <!--var pin = new Microsoft.Maps.Pushpin(loc, null);-->
-                <!--map.entities.push(pin);-->
-                @foreach($ownedForests as $forest)
-                    var loc = new Microsoft.Maps.Location({{ $forest->latitude }}, {{ $forest->longitude }});
-                    var pin = new Microsoft.Maps.Pushpin(loc, {color: 'red'});
-                    map.entities.push(pin);
-                @endforeach
+            var map = new Microsoft.Maps.Map(document.getElementById('myMap'), {
+                /* ここでマップの初期設定を行うことができます */
             });
+    
+            // シングルクリックイベントを追加
+            Microsoft.Maps.Events.addHandler(map, 'click', function(e) {
+                // ピンを立てる
+                var pin = new Microsoft.Maps.Pushpin(e.location);
+                map.entities.push(pin);
+    
+                // 緯度と経度を取得して入力フィールドにセット
+                document.querySelector('input[name="latitude"]').value = e.location.latitude;
+                document.querySelector('input[name="longitude"]').value = e.location.longitude;
+            });
+            
+            // ダブルクリックイベントを追加してズーム
+            Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
+                map.setView({ zoom: map.getZoom() + 1 });  // 現在のズームレベルに+1してズームイン
+            });
+
         }
     </script>
     

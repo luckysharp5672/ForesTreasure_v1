@@ -47,7 +47,7 @@
                     <!-- BingMapを表示するためのdiv -->
                     <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                           マップ上に森林の場所を示してください（マップ上でダブルクリック）
+                           マップ上に森林の場所を示してください（マップ上でクリック）
                         </label>
                         <div id="myMap" style="width: 448px; height: 336px;"></div>
                     </div>
@@ -125,8 +125,8 @@
                 /* ここでマップの初期設定を行うことができます */
             });
     
-            // ダブルクリックイベントを追加
-            Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
+            // シングルクリックイベントを追加
+            Microsoft.Maps.Events.addHandler(map, 'click', function(e) {
                 // ピンを立てる
                 var pin = new Microsoft.Maps.Pushpin(e.location);
                 map.entities.push(pin);
@@ -135,6 +135,12 @@
                 document.querySelector('input[name="latitude"]').value = e.location.latitude;
                 document.querySelector('input[name="longitude"]').value = e.location.longitude;
             });
+            
+            // ダブルクリックイベントを追加してズーム
+            Microsoft.Maps.Events.addHandler(map, 'dblclick', function(e) {
+                map.setView({ zoom: map.getZoom() + 1 });  // 現在のズームレベルに+1してズームイン
+            });
+
         }
     </script>
 

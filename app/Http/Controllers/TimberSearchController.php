@@ -63,8 +63,8 @@ class TimberSearchController extends Controller
         if ($request->filled('longitude') && $request->filled('latitude') && $request->filled('radius')) {
             $longitude = $request->input('longitude');
             $latitude = $request->input('latitude');
-            $radius = $request->input('radius');
-            // 簡易的な距離計算を使用して、指定された半径内のデータをフィルタリング
+            $radius = $request->input('radius'); // 半径（キロメートル）
+            
             $query->whereRaw("
                 (6371 * acos(cos(radians(?)) 
                 * cos(radians(latitude)) 
