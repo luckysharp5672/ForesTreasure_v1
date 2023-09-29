@@ -39,7 +39,10 @@
                                             <th>依頼先</th>
                                             <th>作業完了希望日</th>
                                             <th>作業依頼日</th>
+                                            <th>林業家承認</th>
+                                            <th>森林所有者承認</th>
                                             <th>作業承認日</th>
+                                            <th>作業状況</th>
                                             <th>作業完了日</th>
                                         </tr>
                                     </thead>
@@ -53,6 +56,17 @@
                                                 <td>{{ $request->forester->name }}</td>
                                                 <td>{{ $request->desired_completion_date }}</td>
                                                 <td>{{ $request->request_date }}</td>
+                                                <td>
+                                                    <button class="text-blue-500 hover:text-blue-700" onclick="approveForester({{ $request->work_id }})">承認</button>
+                                                </td>
+                                                <td>
+                                                    <button class="text-blue-500 hover:text-blue-700" onclick="approveOwner({{ $request->work_id }})">承認</button>
+                                                </td>
+                                                <td>
+                                                    @if($request->forester_approved && $request->owner_approved && !$request->completion_date)
+                                                        <button class="btn btn-success" onclick="completeWork({{ $request->id }})">作業完了</button>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $request->approval_date }}</td>
                                                 <td>{{ $request->completion_date }}</td>
                                             </tr>
@@ -70,3 +84,36 @@
     </div>
     
 </x-app-layout>
+
+<script>
+function completeWork(workId) {
+    // CSRFトークンの取得
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    // POSTリクエストの設定
+    let requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        },
+        body: JSON.stringify({ id: workId })
+    };
+
+    // 作業完了のエンドポイントにリクエストを送信
+    fetch(`/work-requests/${workId}/complete`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('作業が完了しました。');
+                location.reload(); // ページをリロード
+            } else {
+                alert('エラーが発生しました。再度お試しください。');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('エラーが発生しました。再度お試しください。');
+        });
+}
+</script>

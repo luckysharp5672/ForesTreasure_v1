@@ -7,6 +7,7 @@ use App\Models\WorkRequest; // WorkRequest モデルをインポート
 use App\Models\Forest;      // Forest モデルをインポート
 use App\Models\User;        // User モデルをインポート
 // use App\Notifications\WorkRequested; // 通知クラスをインポート（存在する場合）
+use App\Notifications\WorkRequestApproved;
 
 class WorkRequestController extends Controller
 {
@@ -56,6 +57,44 @@ class WorkRequestController extends Controller
             'workRequests' => $workRequests, 
             'workRequestAll' => $workRequestAll
         ]); // work_requestsのビューにデータを渡して表示
+    }
+    
+    public function approveForester($id) {
+        $workRequest = WorkRequest::find($id);
+        $workRequest->forester_approved = true;
+        
+        // 両者の承認が完了した場合
+        if ($workRequest->owner_approved) {
+            $workRequest->approval_date = now();
+        }
+    
+        $workRequest->save();
+        $workRequest->requester->notify(new WorkRequestApproved($workRequest));
+    
+        return redirect()->back()->with('message', '林業家の承認が完了しました。');
+    }
+    
+    public function approveOwner($id) {
+        $workRequest = WorkRequest::find($id);
+        $workRequest->owner_approved = true;
+    
+        // 両者の承認が完了した場合
+        if ($workRequest->forester_approved) {
+            $workRequest->approval_date = now();
+        }
+    
+        $workRequest->save();
+        $workRequest->requester->notify(new WorkRequestApproved($workRequest));
+    
+        return redirect()->back()->with('message', '所有者の承認が完了しました。');
+    }
+    
+    public function completeWork($id) {
+        $workRequest = WorkRequest::find($id);
+        $workRequest->completion_date = now();
+        $workRequest->save();
+    
+        return redirect()->back()->with('message', '作業が完了しました。');
     }
 
 }
