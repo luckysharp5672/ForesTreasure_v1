@@ -57,17 +57,28 @@
                                                 <td>{{ $request->desired_completion_date }}</td>
                                                 <td>{{ $request->request_date }}</td>
                                                 <td>
-                                                    <button class="text-blue-500 hover:text-blue-700" onclick="approveForester({{ $request->work_id }})">承認</button>
-                                                </td>
-                                                <td>
-                                                    <button class="text-blue-500 hover:text-blue-700" onclick="approveOwner({{ $request->work_id }})">承認</button>
-                                                </td>
-                                                <td>
-                                                    @if($request->forester_approved && $request->owner_approved && !$request->completion_date)
-                                                        <button class="btn btn-success" onclick="completeWork({{ $request->id }})">作業完了</button>
+                                                    @if($request->forester_approved)
+                                                        <span class="text-red-500">承認済</span>
+                                                    @else
+                                                        <button class="text-blue-500 hover:text-blue-700" onclick="approveForester({{ $request->work_id }})">承認</button>
                                                     @endif
                                                 </td>
+                                                <td>
+                                                    @if($request->owner_approved)
+                                                        <span class="text-red-500">承認済</span>
+                                                    @else
+                                                        <button class="text-blue-500 hover:text-blue-700" onclick="approveOwner({{ $request->work_id }})">承認</button>
+                                                    @endif 
+                                                </td>
                                                 <td>{{ $request->approval_date }}</td>
+                                                <td>
+                                                    @if($request->work_completed)
+                                                        <span class="text-red-500">作業済</span>
+                                                    @else
+                                                        <button class="text-blue-500 hover:text-blue-700" onclick="completeWork({{ $request->work_id }})">作業中</button>
+                                                    @endif
+                                                </td>
+                                                
                                                 <td>{{ $request->completion_date }}</td>
                                             </tr>
                                         @endforeach
@@ -86,34 +97,46 @@
 </x-app-layout>
 
 <script>
-function completeWork(workId) {
-    // CSRFトークンの取得
+function approveForester(workId) {
     let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-
-    // POSTリクエストの設定
-    let requestOptions = {
+    fetch(`/work-requests/${workId}/approve-forester`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': csrfToken
-        },
-        body: JSON.stringify({ id: workId })
-    };
+        }
+    })
+    .then(response => location.reload())
+    .catch(error => alert('エラーが発生しました。'));
+}
 
-    // 作業完了のエンドポイントにリクエストを送信
-    fetch(`/work-requests/${workId}/complete`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('作業が完了しました。');
-                location.reload(); // ページをリロード
-            } else {
-                alert('エラーが発生しました。再度お試しください。');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('エラーが発生しました。再度お試しください。');
-        });
+function approveOwner(workId) {
+    let csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    fetch(`/work-requests/${workId}/approve-owner`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': csrfToken
+        }
+    })
+    .then(response => location.reload())
+    .catch(error => alert('エラーが発生しました。'));
+}
+</script>
+
+<script>
+function completeWork(workId) {
+    fetch(`/work-requests/${workId}/complete`, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        }
+    }).then(response => {
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert('エラーが発生しました。');
+        }
+    });
 }
 </script>

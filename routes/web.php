@@ -53,8 +53,10 @@ Route::resource('work_requests', WorkRequestController::class)->except(['create'
 
 Route::get('/work_requests', [WorkRequestController::class, 'index'])->name('work_requests');
 
-Route::post('/work-requests/{id}/approve-forester', 'WorkRequestController@approveForester');
+Route::post('/work-requests/{id}/approve-forester', [WorkRequestController::class, 'approveForester']);
 
-Route::post('/work-requests/{id}/approve-owner', 'WorkRequestController@approveOwner');
+Route::post('/work-requests/{id}/approve-owner', [WorkRequestController::class, 'approveOwner']);
+
+Route::post('/work-requests/{id}/complete', [WorkRequestController::class, 'completeWork']);
 
 require __DIR__.'/auth.php';

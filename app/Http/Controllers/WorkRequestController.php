@@ -60,30 +60,38 @@ class WorkRequestController extends Controller
     }
     
     public function approveForester($id) {
+        \Log::info('approveForester method called.');
         $workRequest = WorkRequest::find($id);
         $workRequest->forester_approved = true;
         
         // 両者の承認が完了した場合
         if ($workRequest->owner_approved) {
             $workRequest->approval_date = now();
+            $workRequest->save();
+        } else {
+            $workRequest->save();
         }
     
-        $workRequest->save();
+        // $workRequest->save();
         $workRequest->requester->notify(new WorkRequestApproved($workRequest));
     
         return redirect()->back()->with('message', '林業家の承認が完了しました。');
     }
     
     public function approveOwner($id) {
+        \Log::info('approveForester method called.');
         $workRequest = WorkRequest::find($id);
         $workRequest->owner_approved = true;
     
         // 両者の承認が完了した場合
         if ($workRequest->forester_approved) {
             $workRequest->approval_date = now();
+            $workRequest->save();
+        } else {
+            $workRequest->save();
         }
     
-        $workRequest->save();
+        // $workRequest->save();
         $workRequest->requester->notify(new WorkRequestApproved($workRequest));
     
         return redirect()->back()->with('message', '所有者の承認が完了しました。');
@@ -91,6 +99,7 @@ class WorkRequestController extends Controller
     
     public function completeWork($id) {
         $workRequest = WorkRequest::find($id);
+        $workRequest->work_completed = true;
         $workRequest->completion_date = now();
         $workRequest->save();
     

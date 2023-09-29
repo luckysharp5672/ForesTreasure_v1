@@ -9,7 +9,10 @@ class WorkRequest extends Model
 {
     use HasFactory;
     
-        // テーブル名
+    // カスタム主キーの設定
+    protected $primaryKey = 'work_id';
+    
+    // テーブル名
     protected $table = 'work_requests';
 
     // 代入可能なカラムの指定
@@ -21,7 +24,10 @@ class WorkRequest extends Model
         'desired_completion_date',
         'request_date',
         'approval_date',
-        'completion_date'
+        'completion_date',
+        'forester_approved',
+        'owner_approved',
+        'work_completed'
     ];
 
     // リレーション定義
