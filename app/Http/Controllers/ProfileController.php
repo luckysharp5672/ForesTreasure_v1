@@ -16,8 +16,12 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
+        $user = $request->user();
+        $userType = $user->userType->type_name; // user_typeを取得するための関連付けを仮定しています。
+    
         return view('profile.edit', [
-            'user' => $request->user(),
+            'user' => $user,
+            'userType' => $userType,
         ]);
     }
 

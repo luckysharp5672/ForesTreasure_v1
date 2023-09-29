@@ -23,7 +23,7 @@ use App\Http\Controllers\WorkRequestController;
 //     return view('welcome');
 // });
 
-Route::get('/', [ForestController::class, 'index'])->middleware(['auth'])->name('forest.index');
+Route::get('/forest', [ForestController::class, 'index'])->middleware(['auth'])->name('forest.index');
 
 Route::post('forests', [ForestController::class, 'store']);
 

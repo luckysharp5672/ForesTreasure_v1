@@ -26,5 +26,9 @@ class UserTypeSeeder extends Seeder
             'type_name' => '林業家',
         ]);
         
+        UserType::create([
+            'type_name' => '管理者',
+        ]);
+        
     }
 }

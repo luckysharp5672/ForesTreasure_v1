@@ -25,7 +25,9 @@
         <!-- User Type -->
         <select name="user_type_id">
             @foreach ($userTypes as $type)
-                <option value="{{ $type->id }}">{{ $type->type_name }}</option>
+                @if($type->type_name !== '管理者')
+                    <option value="{{ $type->id }}">{{ $type->type_name }}</option>
+                @endif
             @endforeach
         </select>
 
