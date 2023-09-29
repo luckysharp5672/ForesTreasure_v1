@@ -46,8 +46,16 @@ class WorkRequestController extends Controller
     
     public function index()
     {
-        $workRequests = WorkRequest::all(); // すべてのwork_requestsを取得
-        return view('work_requests', ['workRequests' => $workRequests]); // work_requestsのビューにデータを渡して表示
+        $workRequestAll = WorkRequest::all(); // すべてのwork_requestsを取得
+    
+        $workRequests = WorkRequest::where('requester_id', auth()->id())
+                                   ->orWhere('forester_id', auth()->id())
+                                   ->get(); // ログインしているユーザーが依頼元または依頼先になっているリクエストのみを取得
+    
+        return view('work_requests', [
+            'workRequests' => $workRequests, 
+            'workRequestAll' => $workRequestAll
+        ]); // work_requestsのビューにデータを渡して表示
     }
 
 }

@@ -20,33 +20,47 @@
         <form action="{{ route('timber.search.results') }}" method="post">
             @csrf
             
-            <label for="owned_forests">所有している森林:</label>
-            <select name="owned_forests[]" multiple>
-                @foreach($ownedForests as $forest)
-                    <option value="{{ $forest->id }}">{{ $forest->forest_name }}</option>
-                @endforeach
-            </select>
+            <!-- 検索方法の選択 -->
+            <div>
+                <input type="radio" id="searchByOwnedForest" name="searchType" value="ownedForest" checked>
+                <label for="searchByOwnedForest">所有している森林での検索</label>
             
-            <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
-            
-            <!-- 緯度 -->
-            <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-               緯度
-              </label>
-              <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
-            </div>
-            <!-- 経度 -->
-            <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
-              <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-               経度
-              </label>
-              <input name="longitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                <input type="radio" id="searchByCoordinates" name="searchType" value="coordinates">
+                <label for="searchByCoordinates">緯度・経度・半径での検索</label>
             </div>
             
-            <label for="radius">検索範囲の半径 (km)</label>
-            <input type="number" name="radius" id="radius">
-
+            <!-- 所有している森林の選択 -->
+            <div id="ownedForestsSection">
+                <label for="owned_forests">所有している森林:</label>
+                <select name="owned_forests[]" multiple>
+                    @foreach($ownedForests as $forest)
+                        <option value="{{ $forest->id }}">{{ $forest->forest_name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <!-- 緯度・経度・半径での検索 -->
+            <div id="coordinatesSection" style="display: none;">
+                <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
+                
+                <!-- 緯度 -->
+                <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                   緯度
+                  </label>
+                  <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                </div>
+                <!-- 経度 -->
+                <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                   経度
+                  </label>
+                  <input name="longitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                </div>
+                
+                <label for="radius">検索範囲の半径 (km)</label>
+                <input type="number" name="radius" id="radius">
+            </div>
             
             @foreach(['diameter', 'height', 'arrow_height', 'volume', 'biomass'] as $field)
             <div class="filter-section">
@@ -94,6 +108,21 @@
         </form>
         <!-- 検索フォームの終了 -->
     </div>
+    
+    <script>
+    // ラジオボタンの変更を監視
+        document.querySelectorAll('input[name="searchType"]').forEach(function(radio) {
+            radio.addEventListener('change', function() {
+                if (this.value === 'ownedForest') {
+                    document.getElementById('ownedForestsSection').style.display = 'block';
+                    document.getElementById('coordinatesSection').style.display = 'none';
+                } else {
+                    document.getElementById('ownedForestsSection').style.display = 'none';
+                    document.getElementById('coordinatesSection').style.display = 'block';
+                }
+            });
+        });
+    </script>
 
     <!-- Bing Maps APIのスクリプト -->
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=ApUslpO8ghJ6mpe35ApW427eo72OmGGHg9ETniAK37AnLv7g6GzjaiEkrMB1cowL' async defer></script>
