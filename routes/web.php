@@ -19,9 +19,11 @@ use App\Http\Controllers\WorkRequestController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::post('/profile/update-work-area', [ProfileController::class, 'updateWorkArea'])->name('profile.updateWorkArea');
 
 Route::get('/forest', [ForestController::class, 'index'])->middleware(['auth'])->name('forest.index');
 

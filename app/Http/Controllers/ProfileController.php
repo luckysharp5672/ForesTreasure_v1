@@ -40,7 +40,26 @@ class ProfileController extends Controller
 
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
+    
+    public function updateWorkArea(Request $request)
+    {
+        $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'radius' => 'required|numeric',
+        ]);
+    
+        $user = auth()->user();
+        $user->latitude = $request->input('latitude');
+        $user->longitude = $request->input('longitude');
+        $user->radius = $request->input('radius');
+        $user->save();
+    
+        return redirect()->back()->with('success', '活動範囲が更新されました。');
+    }
 
+    
+    
     /**
      * Delete the user's account.
      */

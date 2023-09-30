@@ -16,7 +16,11 @@ class TimberSearchController extends Controller
     {
         $speciesList = ForestInformation::distinct()->pluck('species');
         $ownedForests = Forest::where('owner_id', Auth::id())->get();
-        return view('timber_search', ['speciesList' => $speciesList, 'ownedForests' => $ownedForests]);
+
+        return view('timber_search', [
+            'speciesList' => $speciesList,
+            'ownedForests' => $ownedForests
+        ]);
     
     }
     
@@ -75,8 +79,13 @@ class TimberSearchController extends Controller
         }
     
         $results = $query->get();
-    
-        return view('timber_search_results', ['results' => $results]);
+        
+        $forests = Forest::whereIn('id', $results->pluck('forest_id'))->get();
+        
+        return view('timber_search_results', [
+            'results' => $results,
+            'forests' => $forests
+        ]);
     }
     
     protected function saveSearchConditions(Request $request)
