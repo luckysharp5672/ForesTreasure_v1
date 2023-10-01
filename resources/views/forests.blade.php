@@ -27,7 +27,7 @@
             
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-500 font-bold">
-                    森林を登録する
+                    森林登録
                 </div>
             </div>
 

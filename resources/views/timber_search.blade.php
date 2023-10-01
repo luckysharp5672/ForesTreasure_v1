@@ -12,101 +12,134 @@
         </h2>
     </x-slot>
     <!--ヘッダー[END]-->
-
-    <div class="container">
-        <h1>木材探し</h1>
     
-        <!-- 検索フォームの開始 -->
-        <form action="{{ route('timber.search.results') }}" method="post">
-            @csrf
-            
-            <!-- 検索方法の選択 -->
-            <div>
-                <input type="radio" id="searchByOwnedForest" name="searchType" value="ownedForest" checked>
-                <label for="searchByOwnedForest">所有している森林での検索</label>
-            
-                <input type="radio" id="searchByCoordinates" name="searchType" value="coordinates">
-                <label for="searchByCoordinates">緯度・経度・半径での検索</label>
-            </div>
-            
-            <!-- 所有している森林の選択 -->
-            <div id="ownedForestsSection">
-                <label for="owned_forests">所有している森林:</label>
-                <select name="owned_forests[]" multiple>
-                    @foreach($ownedForests as $forest)
-                        <option value="{{ $forest->id }}">{{ $forest->forest_name }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <!-- 緯度・経度・半径での検索 -->
-            <div id="coordinatesSection" style="display: none;">
-                <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
-                
-                <!-- 緯度 -->
-                <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                   緯度
-                  </label>
-                  <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+    <!--全エリア[START]-->
+    <div class="flex bg-gray-100">
+        <div class="w-full text-gray-700 text-left px-4 py-4 m-2">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-500 font-bold">
+                    木材検索
                 </div>
-                <!-- 経度 -->
-                <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
-                  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                   経度
-                  </label>
-                  <input name="longitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
-                </div>
-                
-                <label for="radius">検索範囲の半径 (km)</label>
-                <input type="number" name="radius" id="radius">
             </div>
             
-            @foreach(['diameter', 'height', 'arrow_height', 'volume', 'biomass'] as $field)
-            <div class="filter-section">
-                <label for="{{ $field }}">{{ ucfirst($field) }}</label>
-                <select name="{{ $field }}_operator1">
-                    <option value="=">=</option>
-                    <option value="<"><</option>
-                    <option value=">">></option>
-                    <option value="<="><=</option>
-                    <option value=">=">>=</option>
-                </select>
-                <input type="text" name="{{ $field }}_value1">
-            
-                <select name="{{ $field }}_connector">
-                    <option value="and">AND</option>
-                    <option value="or">OR</option>
-                </select>
-            
-                <select name="{{ $field }}_operator2">
-                    <option value="=">=</option>
-                    <option value="<"><</option>
-                    <option value=">">></option>
-                    <option value="<="><=</option>
-                    <option value=">=">>=</option>
-                </select>
-                <input type="text" name="{{ $field }}_value2">
-            </div>
-            @endforeach
-
-            <label for="species">樹種</label>
-            <select name="species[]" multiple>
-                @foreach($speciesList as $species)
-                    <option value="{{ $species }}">{{ $species }}</option>
-                @endforeach
-            </select>
-            
-            <!-- 検索条件名の入力フィールド -->
-            <div class="form-group">
-                <label for="condition_name">検索条件名:</label>
-                <input type="text" name="condition_name" class="form-control" required>
-            </div>
+                <!-- 検索フォームの開始 -->
+                <form action="{{ route('timber.search.results') }}" method="post" class="bg-white p-6 rounded shadow">
+                    @csrf
+                    
+                    <!-- 検索方法の選択 -->
+                    <div class="mb-4">
+                        <div>
+                            <input type="radio" id="searchByOwnedForest" name="searchType" value="ownedForest" checked>
+                            <label for="searchByOwnedForest">所有している森林での検索</label>
+                        
+                            <input type="radio" id="searchByCoordinates" name="searchType" value="coordinates">
+                            <label for="searchByCoordinates">緯度・経度・半径での検索</label>
+                        </div>
+                    </div>
+                    <!-- 所有している森林の選択 -->
+                    <div id="ownedForestsSection" class="mb-4">
+                        <label for="owned_forests" class="block text-sm font-medium text-gray-700">所有している森林:</label>
+                        <select name="owned_forests[]" multiple class="mt-1 block w-full rounded-md shadow-sm border-gray-300 overflow-y-auto" style="max-height: 65px;">
+                            @foreach($ownedForests as $forest)
+                                <option value="{{ $forest->id }}">{{ $forest->forest_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    
+                    <!-- 緯度・経度・半径での検索 -->
+                    <div id="coordinatesSection" style="display: none;" class="mb-4">
+                        <label for="owned_forests" class="block text-sm font-medium text-gray-700">緯度/経度/検索範囲の半径:</label>
+                        <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
+                        
+                        <!-- 緯度 -->
+                        <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                          <label class="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                           緯度
+                          </label>
+                          <input name="latitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                        </div>
+                        <!-- 経度 -->
+                        <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                          <label class="block uppercase tracking-wide text-gray-700 font-bold mb-2">
+                           経度
+                          </label>
+                          <input name="longitude" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" type="text" placeholder="">
+                        </div>
+                        
+                        <!-- 検索範囲の半径 -->
+                        <div class="w-full md:w-1/1 px-3 mb-2 md:mb-0">
+                            <label for="radius">検索範囲の半径 (km)</label>
+                            <input type="number" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" name="radius" id="radius">
+                        </div>
+                    </div>
+                    
+                    <label for="timber_selection" class="block text-sm font-medium text-gray-700">立木形状:</label>
+                    <div class="flex mb-4 items-stretch">    
+                        @foreach(['胸高直径', '樹高', '矢高', '立木体積', '立木バイオマス'] as $field)
+                            <div class="mb-4">
+                            <label for="{{ $field }}">{{ ucfirst($field) }}</label>
+                                <div class="mb-4">
+                                    <div class="w-1/2 pr-2">
+                                        <select name="{{ $field }}_operator1" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                            <option value="=">=</option>
+                                            <option value="<"><</option>
+                                            <option value=">">></option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                        </select>
+                                    </div>
+                                    <div class="w-1/2 pl-2">
+                                        <input type="text" name="{{ $field }}_value1" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <select name="{{ $field }}_connector" class="appearance-none block w-144 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                        <option value="and">AND</option>
+                                        <option value="or">OR</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <div class="w-1/2 pr-2">
+                                        <select name="{{ $field }}_operator2" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                            <option value="=">=</option>
+                                            <option value="<"><</option>
+                                            <option value=">">></option>
+                                            <option value="<="><=</option>
+                                            <option value=">=">>=</option>
+                                        </select>
+                                    </div>
+                                    <div class="w-1/2 pl-2">
+                                        <input type="text" name="{{ $field }}_value2" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
         
-            <button type="submit" name="action" value="search" class="btn btn-primary">立木検索</button>
-            <button type="submit" name="action" value="save" class="btn btn-secondary">検索条件を記録</button>
-        </form>
-        <!-- 検索フォームの終了 -->
+                    <div class="mb-4">
+                        <label for="species" class="block text-sm font-medium text-gray-700">樹種:</label>
+                        <select name="species[]" multiple class="mt-1 block w-full rounded-md shadow-sm border-gray-300 overflow-y-auto" style="max-height: 65px;">
+                            @foreach($speciesList as $species)
+                                <option value="{{ $species }}">{{ $species }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    
+                    <!-- 検索条件名の入力フィールド -->
+                    <div class="form-group">
+                        <label for="condition_name">検索条件名:</label>
+                        <input type="text" name="condition_name" class="form-control" required>
+                    </div>
+                
+                    <button type="submit" name="action" value="search" class="btn btn-primary">立木検索</button>
+                    <button type="submit" name="action" value="save" class="btn btn-secondary">検索条件を記録</button>
+                </form>
+                <!-- 検索フォームの終了 -->
+            </div>
+        </div>
     </div>
     
     <script>
