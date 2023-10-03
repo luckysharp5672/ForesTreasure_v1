@@ -6,7 +6,7 @@
     <a class="text-blue-500 hover:text-blue-700" href="{{ route('forest.detail', ['id' => $forest->id]) }}">詳細</a>
   </td>
    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-            <a class="text-blue-500 hover:text-blue-700" href="{{ route('work_requests.create', ['forestId' => $forest->id]) }}">作業依頼</a>
+            <a class="text-blue-500 hover:text-blue-700" href="{{ route('work_requests.create', ['forestId' => $forest->id]) }}">依頼フォーム</a>
   </td>
   <!-- <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">-->
   <!--          <a class="text-blue-500 hover:text-blue-700" href="#">編集</a>-->

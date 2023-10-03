@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ForestController;
 use App\Http\Controllers\ForestInfoController;
+use App\Http\Controllers\TreeLayoutImageController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\TimberSearchController;
 use App\Http\Controllers\WorkRequestController;
@@ -44,6 +45,10 @@ Route::get('/forest/detail/{id}', [ForestInfoController::class, 'detail'])->name
 Route::post('/forestinformation/import', [ForestInfoController::class, 'import'])->name('forestinformation.import');
 
 Route::post('/upload', [VideoController::class, 'upload'])->name('video.upload');
+
+Route::post('/tree-layout-image/upload', [TreeLayoutImageController::class, 'upload'])->name('treeLayout.upload');
+
+Route::get('/tree-layout-image/{id}', [TreeLayoutImageController::class, 'show'])->name('treeLayout.show');
 
 Route::get('/timber_search', [TimberSearchController::class, 'index'])->name('timber_search');
 

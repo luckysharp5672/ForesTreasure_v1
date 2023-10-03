@@ -51,7 +51,7 @@
 
                             <div class="ml-12">
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                   森林価値の見える化することで森林の最大価値化し
+                                   森林を見える化することで森林の価値を最大化し
                                 </div>
                                 <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                    森林と人を紡ぐプラットフォームです。

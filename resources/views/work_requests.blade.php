@@ -30,6 +30,9 @@
                 <div class="p-6 bg-white border-b border-gray-500 font-bold">
                     作業一覧
                 </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    あなたに関連した作業の一覧が表示されています。青字の状況を確認して、ステータスをアップデートする場合は青字をクリックしてください。
+                </div>
             </div>
             <div class="flex flex-col">
                 <div class="-m-1.5 overflow-x-auto" style="height: 600px; overflow-y: auto;">
@@ -63,25 +66,25 @@
                                             <td>{{ $request->desired_completion_date }}</td>
                                             <td>{{ $request->request_date }}</td>
                                             <td>
-                                                @if($request->forester_approved)
-                                                    <span class="text-red-500">承認済</span>
-                                                @else
+                                                @if(!$request->forester_approved && auth()->user()->id == $request->forester->id)
                                                     <button class="text-blue-500 hover:text-blue-700" onclick="approveForester({{ $request->work_id }})">承認</button>
+                                                @elseif($request->forester_approved)
+                                                    <span class="text-red-500">承認済</span>
                                                 @endif
                                             </td>
                                             <td>
-                                                @if($request->owner_approved)
-                                                    <span class="text-red-500">承認済</span>
-                                                @else
+                                                @if(!$request->owner_approved && auth()->user()->id == $request->forest->owner_id)
                                                     <button class="text-blue-500 hover:text-blue-700" onclick="approveOwner({{ $request->work_id }})">承認</button>
-                                                @endif 
+                                                @elseif($request->owner_approved)
+                                                    <span class="text-red-500">承認済</span>
+                                                @endif
                                             </td>
                                             <td>{{ $request->approval_date }}</td>
                                             <td>
-                                                @if($request->work_completed)
-                                                    <span class="text-red-500">作業済</span>
-                                                @else
+                                                @if($request->approval_date && !$request->work_completed && auth()->user()->id == $request->forester->id)
                                                     <button class="text-blue-500 hover:text-blue-700" onclick="completeWork({{ $request->work_id }})">作業中</button>
+                                                @elseif($request->work_completed)
+                                                    <span class="text-red-500">作業済</span>
                                                 @endif
                                             </td>
                                             

@@ -14,6 +14,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    森林をお持ちで、ForesTreasureプラットフォームに登録したい場合はこちらからご登録をお願いします。
+                </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
                     @if(in_array(auth()->user()->userType->type_name, ['森林所有者', '管理者']))
                         <a class="text-blue-500 hover:text-blue-700" href="{{ route('forest.index') }}">{{ __('森林登録') }}</a>
                     @else
@@ -29,6 +32,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
+                    範囲を指定してその範囲内の森林に眠る立木を検索したい場合はこちらからお願いします。
+                </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
                     @if(in_array(auth()->user()->userType->type_name, ['森林所有者', '木材探求者', '管理者']))
                         <a class="text-blue-500 hover:text-blue-700" href="{{ route('timber_search') }}">{{ __('立木検索') }}</a>
                     @else
@@ -43,6 +49,9 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    これまでの作業依頼と作業受託の一覧を確認したい場合はこちらからお願いします。
+                </div>
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     @if(in_array(auth()->user()->userType->type_name, ['森林所有者', '木材探求者', '林業家', '管理者']))
                         <a class="text-blue-500 hover:text-blue-700" href="{{ route('work_requests') }}">{{ __('作業一覧') }}</a>

@@ -24,4 +24,10 @@ class Forest extends Model
     {
         return $this->hasMany('App\Models\Video');
     }
+    
+    // TreeLayoutImagesテーブルとのリレーション （主テーブル側）
+    public function treeLayoutImages()
+    {
+        return $this->hasMany('App\Models\TreeLayoutImage');
+    }
 }

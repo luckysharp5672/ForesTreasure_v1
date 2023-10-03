@@ -20,6 +20,15 @@
                 <div class="p-6 bg-white border-b border-gray-500 font-bold">
                     木材検索
                 </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    <div>
+                        所有している森林内での検索か、座標（緯度/経度）とそこからの半径距離での検索ができます。
+                    </div>
+                    <div>
+                        森林範囲を指定後は立木形状と樹種で検索できます。
+                    </div>
+                </div>
+
             </div>
             
                 <!-- 検索フォームの開始 -->
@@ -33,12 +42,15 @@
                             <label for="searchByOwnedForest">所有している森林での検索</label>
                         
                             <input type="radio" id="searchByCoordinates" name="searchType" value="coordinates">
-                            <label for="searchByCoordinates">緯度・経度・半径での検索</label>
+                            <label for="searchByCoordinates">緯度/経度/半径での検索</label>
                         </div>
                     </div>
                     <!-- 所有している森林の選択 -->
                     <div id="ownedForestsSection" class="mb-4">
                         <label for="owned_forests" class="block text-sm font-medium text-gray-700">所有している森林:</label>
+                        <div class="text-gray-900 dark:text-gray-100">
+                            森林はShift もしくは Ctrlを押しながら選択することで複数選択できます。
+                        </div>
                         <select name="owned_forests[]" multiple class="mt-1 block w-full rounded-md shadow-sm border-gray-300 overflow-y-auto" style="max-height: 65px;">
                             @foreach($ownedForests as $forest)
                                 <option value="{{ $forest->id }}">{{ $forest->forest_name }}</option>
@@ -49,6 +61,9 @@
                     <!-- 緯度・経度・半径での検索 -->
                     <div id="coordinatesSection" style="display: none;" class="mb-4">
                         <label for="owned_forests" class="block text-sm font-medium text-gray-700">緯度/経度/検索範囲の半径:</label>
+                        <div class="text-gray-900 dark:text-gray-100">
+                            検索したいエリアの中心をマップ上でクリックして指定して下さい。その後検索範囲の半径を入力してください。
+                        </div>
                         <div id="myMap" style="position:relative;width:600px;height:400px;"></div>
                         
                         <!-- 緯度 -->
@@ -74,8 +89,8 @@
                     </div>
                     
                     <label for="timber_selection" class="block text-sm font-medium text-gray-700">立木形状:</label>
-                    <div class="flex mb-4 items-stretch">    
-                        @foreach(['胸高直径', '樹高', '矢高', '立木体積', '立木バイオマス'] as $field)
+                    <div class="flex mb-4 items-stretch justify-between">    
+                        @foreach(['胸高直径[cm]', '樹高[m]', '矢高[cm]', '立木体積[m3]', '立木バイオマス[kg]'] as $field)
                             <div class="mb-4">
                             <label for="{{ $field }}">{{ ucfirst($field) }}</label>
                                 <div class="mb-4">
@@ -129,13 +144,13 @@
 
                     
                     <!-- 検索条件名の入力フィールド -->
-                    <div class="form-group">
-                        <label for="condition_name">検索条件名:</label>
-                        <input type="text" name="condition_name" class="form-control" required>
-                    </div>
+                    <!--<div class="form-group">-->
+                    <!--    <label for="condition_name">検索条件名:</label>-->
+                    <!--    <input type="text" name="condition_name" class="form-control" required>-->
+                    <!--</div>-->
                 
-                    <button type="submit" name="action" value="search" class="btn btn-primary">立木検索</button>
-                    <button type="submit" name="action" value="save" class="btn btn-secondary">検索条件を記録</button>
+                    <x-button type="submit" name="action" value="search" class="bg-blue-500 rounded-lg">立木検索</x-button>
+                    <!--<button type="submit" name="action" value="save" class="btn btn-secondary">検索条件を記録</button>-->
                 </form>
                 <!-- 検索フォームの終了 -->
             </div>

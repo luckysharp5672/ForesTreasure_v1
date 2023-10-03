@@ -28,13 +28,36 @@ class TimberSearchController extends Controller
     {   
         $action = $request->input('action');
     
-        if ($action === 'save') {
-            $this->saveSearchConditions($request);
-            return back()->with('success', '検索条件を保存しました。');
-        }
+        // if ($action === 'save') {
+        //     $this->saveSearchConditions($request);
+        //     return back()->with('success', '検索条件を保存しました。');
+        // }
         
         $query = ForestInformation::query();
         
+        // 所有している森林の条件
+        $ownedForestIds = Forest::where('owner_id', Auth::id())->pluck('id');
+        
+        // 検索方法に基づいてforest idを取得
+        if ($request->input('searchType') === 'ownedForest') {
+            $selectedForests = $request->input('owned_forests');
+            $query->whereIn('forest_id', $selectedForests);
+        } else {
+            $longitude = $request->input('longitude');
+            $latitude = $request->input('latitude');
+            $radius = $request->input('radius'); // 半径（キロメートル）
+    
+            $forestIdsInRadius = Forest::whereRaw("
+                (6371 * acos(cos(radians(?)) 
+                * cos(radians(latitude)) 
+                * cos(radians(longitude) - radians(?)) 
+                + sin(radians(?)) 
+                * sin(radians(latitude)))) < ?
+            ", [$latitude, $longitude, $latitude, $radius])->pluck('id');
+    
+            $query->whereIn('forest_id', $forestIdsInRadius);
+        }
+    
         // 数値フィールドの条件を処理
         $fields = ['diameter', 'height', 'arrow_height', 'volume', 'biomass'];
         foreach ($fields as $field) {
@@ -43,7 +66,7 @@ class TimberSearchController extends Controller
                 $value1 = $request->input("{$field}_value1");
                 $query->where($field, $operator1, $value1);
             }
-            
+    
             if ($request->input("{$field}_value2")) {
                 $operator2 = $request->input("{$field}_operator2");
                 $value2 = $request->input("{$field}_value2");
@@ -56,26 +79,11 @@ class TimberSearchController extends Controller
                 }
             }
         }
-        
+    
         // 種類の条件を処理
         if ($request->filled('species')) {
             $species = $request->input('species');
             $query->whereIn('species', $species);
-        }
-
-        // 経度と緯度の条件を処理（簡易的な距離計算の例）
-        if ($request->filled('longitude') && $request->filled('latitude') && $request->filled('radius')) {
-            $longitude = $request->input('longitude');
-            $latitude = $request->input('latitude');
-            $radius = $request->input('radius'); // 半径（キロメートル）
-            
-            $query->whereRaw("
-                (6371 * acos(cos(radians(?)) 
-                * cos(radians(latitude)) 
-                * cos(radians(longitude) - radians(?)) 
-                + sin(radians(?)) 
-                * sin(radians(latitude)))) < ?
-            ", [$latitude, $longitude, $latitude, $radius]);
         }
     
         $results = $query->get();

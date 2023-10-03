@@ -13,45 +13,58 @@
     </x-slot>
     <!--ヘッダー[END]-->
     
-    <!--左側エリア[START]-->
-    <div class="container">
-        <h1>Timber Search Results</h1>
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Diameter</th>
-                        <th>Height</th>
-                        <th>Arrow Height</th>
-                        <th>Volume</th>
-                        <th>Biomass</th>
-                        <th>Species</th>
-                        <th>Longitude</th>
-                        <th>Latitude</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($results as $result)
-                    <tr>
-                        <td>{{ $result->diameter }}</td>
-                        <td>{{ $result->height }}</td>
-                        <td>{{ $result->arrow_height }}</td>
-                        <td>{{ $result->volume }}</td>
-                        <td>{{ $result->biomass }}</td>
-                        <td>{{ $result->species }}</td>
-                        <td>{{ $result->longitude }}</td>
-                        <td>{{ $result->latitude }}</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            
-            <div id="bingMap" style="position:relative;width:600px;height:400px;"></div>
+    <!--立木の検索結果一覧-->
+    <div class="flex-1 text-gray-700 text-left px-4 py-2 m-2">
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 bg-white border-b border-gray-500 font-bold">
+                立木検索結果
+            </div>
+            <div class="p-6 text-gray-900 dark:text-gray-100">
+                選択した森林内での立木の検索結果です。作業を依頼する場合は下部に作業依頼フォームへのリンクがありますのでそちらからお願いします。
+            </div>
+        </div>
+        <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto" style="height: 450px; overflow-y: auto;">
+                <div class="p-1.5 w-full inline-block align-middle overflow-x-auto">
+                    <div class="border rounded-lg shadow w-full dark:border-gray-700 dark:shadow-gray-900">
+                        <table class="w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead>
+                                <tr>
+                                    <th>胸高直径[cm]</th>
+                                    <th>樹高[m]</th>
+                                    <th>矢高[cm]</th>
+                                    <th>立木材積[m3]</th>
+                                    <th>立木バイオマス[kg]</th>
+                                    <th>樹種</th>
+                                    <th>緯度</th>
+                                    <th>経度</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($results as $result)
+                                <tr>
+                                    <td>{{ $result->diameter }}</td>
+                                    <td>{{ $result->height }}</td>
+                                    <td>{{ $result->arrow_height }}</td>
+                                    <td>{{ $result->volume }}</td>
+                                    <td>{{ $result->biomass }}</td>
+                                    <td>{{ $result->species }}</td>
+                                    <td>{{ $result->longitude }}</td>
+                                    <td>{{ $result->latitude }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!--<div id="bingMap" style="position:relative;width:600px;height:400px;"></div>-->
     <!--左側エリア[END]-->
     
     <!--右側エリア[START]-->
     <div class="flex-1 text-gray-700 text-left px-4 py-2 m-2">
-         <!-- チームの一覧 -->
         <div class="flex flex-col">
           <div class="-m-1.5 overflow-x-auto" style="height: 600px; overflow-y: auto;">
             <div class="p-1.5 min-w-full inline-block align-middle">
@@ -68,7 +81,7 @@
                     </tr>
                   </thead>
                   <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @if (count($forests) > 0)
+                    @if ($forests && count($forests) > 0)
                         @foreach ($forests as $forest)
                             <x-collection :forest="$forest"></x-collection>
                         @endforeach
@@ -82,7 +95,7 @@
     </div>
     <!--右側エリア[[END]-->  
     
-    <!-- Bing Maps APIのスクリプト -->
+    <!-- Bing Maps APIのスクリプト（あまり森林の場所をオープンに出すのは良くないと思うのでいったん -->
     <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=loadMapScenario&key=ApUslpO8ghJ6mpe35ApW427eo72OmGGHg9ETniAK37AnLv7g6GzjaiEkrMB1cowL' async defer></script>
     
     <script type="text/javascript">

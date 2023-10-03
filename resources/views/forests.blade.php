@@ -29,6 +29,10 @@
                 <div class="p-6 bg-white border-b border-gray-500 font-bold">
                     森林登録
                 </div>
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    森林名の入力とマップ上で森林の場所を示してから森林の登録をお願いします。
+                </div>
+
             </div>
 
 
