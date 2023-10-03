@@ -90,9 +90,25 @@
                     
                     <label for="timber_selection" class="block text-sm font-medium text-gray-700">立木形状:</label>
                     <div class="flex mb-4 items-stretch justify-between">    
-                        @foreach(['胸高直径[cm]', '樹高[m]', '矢高[cm]', '立木体積[m3]', '立木バイオマス[kg]'] as $field)
+                        @foreach(['diameter', 'height', 'arrow_height', 'volume', 'biomass'] as $field)
                             <div class="mb-4">
-                            <label for="{{ $field }}">{{ ucfirst($field) }}</label>
+                                @switch($field)
+                                    @case('diameter')
+                                        <label for="{{ $field }}">胸高直径[cm]</label>
+                                        @break
+                                    @case('height')
+                                        <label for="{{ $field }}">樹高[m]</label>
+                                        @break
+                                    @case('arrow_height')
+                                        <label for="{{ $field }}">矢高[cm]</label>
+                                        @break
+                                    @case('volume')
+                                        <label for="{{ $field }}">立木体積[m3]</label>
+                                        @break
+                                    @case('biomass')
+                                        <label for="{{ $field }}">立木バイオマス[kg]</label>
+                                        @break
+                                @endswitch
                                 <div class="mb-4">
                                     <div class="w-1/2 pr-2">
                                         <select name="{{ $field }}_operator1" class="appearance-none block w-full text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white">

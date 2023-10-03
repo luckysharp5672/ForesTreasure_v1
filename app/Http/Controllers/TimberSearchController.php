@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\ForestInformation;
 use App\Models\SearchCondition;
 use App\Models\Forest;
+use Illuminate\Support\Facades\Log;
 
 
 class TimberSearchController extends Controller
@@ -66,7 +67,7 @@ class TimberSearchController extends Controller
                 $value1 = $request->input("{$field}_value1");
                 $query->where($field, $operator1, $value1);
             }
-    
+            
             if ($request->input("{$field}_value2")) {
                 $operator2 = $request->input("{$field}_operator2");
                 $value2 = $request->input("{$field}_value2");
