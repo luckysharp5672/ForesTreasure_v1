@@ -73,7 +73,7 @@ class WorkRequestController extends Controller
         }
     
         // $workRequest->save();
-        $workRequest->requester->notify(new WorkRequestApproved($workRequest));
+        // $workRequest->requester->notify(new WorkRequestApproved($workRequest));
     
         return redirect()->back()->with('message', '林業家の承認が完了しました。');
     }
@@ -92,7 +92,7 @@ class WorkRequestController extends Controller
         }
     
         // $workRequest->save();
-        $workRequest->requester->notify(new WorkRequestApproved($workRequest));
+        // $workRequest->requester->notify(new WorkRequestApproved($workRequest));
     
         return redirect()->back()->with('message', '所有者の承認が完了しました。');
     }
